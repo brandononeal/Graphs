@@ -7,9 +7,9 @@ world = World()
 
 # You may uncomment the smaller graphs for development and testing purposes.
 # map_file = "maps/test_line.txt"
-# map_file = "maps/test_cross.txt"
+map_file = "maps/test_cross.txt"
 # map_file = "maps/test_loop.txt"
-map_file = "maps/test_loop_fork.txt"
+# map_file = "maps/test_loop_fork.txt"
 # map_file = "maps/main_maze.txt"
 
 # Loads the map into a dictionary
@@ -25,22 +25,29 @@ player = Player(world.starting_room)
 # traversal_path = ['n', 'n']
 traversal_path = []
 
-def populate_graph():
+def populate_rooms():
     rooms = {}
     room_exits = {}
-    current_exits = player.current_room.get_exits()
 
-    for x in current_exits:
-        room_exits[x] = '?'
+    for x in player.current_room.get_exits():
+        player.travel(x)
+
+        room_exits[x] = player.current_room.id
+
+        if x == 'n':
+            player.travel('s')
+        if x == 's':
+            player.travel('n')
+        if x == 'e':
+            player.travel('w')
+        if x == 'w':
+            player.travel('e')
 
     rooms[player.current_room.id] = room_exits
 
     print(f'\n{rooms}\n')
 
-populate_graph()
-
-def bft():
-    pass
+populate_rooms()
 
 # TRAVERSAL TEST
 visited_rooms = set()
