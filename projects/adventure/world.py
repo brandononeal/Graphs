@@ -1,6 +1,4 @@
 from room import Room
-import random
-import math
 
 class World:
     def __init__(self):
@@ -85,5 +83,3 @@ class World:
             str += "#\n"
         print(str)
         print("#####")
-
-
